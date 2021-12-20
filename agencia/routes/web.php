@@ -39,3 +39,8 @@ Route::get('/imprimir', function ()
                     ]
             );
 });
+##### extendiendo la plantilla
+Route::get('/inicio', function ()
+{
+    return view('inicio');
+});
