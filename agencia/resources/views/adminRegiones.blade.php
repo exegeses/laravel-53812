@@ -18,10 +18,10 @@
                 </tr>
             </thead>
             <tbody>
-
+        @foreach( $regiones as $region )
                 <tr>
-                    <td>{{ 'regID' }}</td>
-                    <td>{{ 'regNombre' }}</td>
+                    <td>{{ $region->idRegion }}</td>
+                    <td>{{ $region->regNombre }}</td>
                     <td>
                         <a href="/modificarRegion/idRegion" class="btn btn-outline-secondary">
                             Modificar
@@ -33,7 +33,7 @@
                         </a>
                     </td>
                 </tr>
-
+        @endforeach
             </tbody>
         </table>
 
