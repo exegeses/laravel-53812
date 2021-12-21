@@ -103,3 +103,21 @@ Route::post('/modificarRegion', function ()
     return redirect('/adminRegiones')
         ->with(['mensaje'=>'Region: '.$regNombre.' agregada correctamente.']);
 });
+Route::get('/adminDestinos', function ()
+{
+    /*$destinos = DB::select('
+                    SELECT
+                            idDestino, destNombre, destPrecio,
+                            regNombre
+                        FROM destinos as d
+                          JOIN regiones as r
+                            ON d.idRegion = r.idRegion
+                    ');*/
+    $destinos = DB::table('destinos as d')
+                    ->select('idDestino', 'destNombre', 'destPrecio','regNombre')
+                    ->join('regiones as r', 'd.idRegion', '=', 'r.idRegion' )
+                    ->get();
+
+    //$destinos = DB::table('destinos')->get();
+    return view('adminDestinos', [ 'destinos'=>$destinos ]);
+});
