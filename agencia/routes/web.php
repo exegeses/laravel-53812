@@ -49,7 +49,8 @@ Route::get('/inicio', function ()
 Route::get('/adminRegiones', function ()
 {
     //obtenemos listado de regiones
-    $regiones = DB::select('SELECT idRegion, regNombre FROM regiones');
+    /*$regiones = DB::select('SELECT idRegion, regNombre FROM regiones');*/
+    $regiones = DB::table('regiones')->get();
     //retornar la vista del admin
     return view('adminRegiones', [ 'regiones'=>$regiones ]);
 });
@@ -62,11 +63,12 @@ Route::post('/agregarRegion', function ()
     //capturamos dato enviado por el form
     $regNombre = $_POST['regNombre'];
     //insertamos dato en tabla regiones
-    DB::insert('INSERT INTO regiones
+    /*DB::insert('INSERT INTO regiones
                             ( regNombre )
                         VALUE
                             ( :regNombre )',
-                            [ $regNombre ]);
+                            [ $regNombre ]);*/
+    DB::table('regiones')->insert([ 'regNombre' => $regNombre ]);
     //redirección con reporte ok
     return redirect('/adminRegiones')
                 ->with(['mensaje'=>'Region: '.$regNombre.' agregada correctamente.']);
