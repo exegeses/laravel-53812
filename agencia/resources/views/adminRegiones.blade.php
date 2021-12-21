@@ -28,12 +28,12 @@
                     <td>{{ $region->idRegion }}</td>
                     <td>{{ $region->regNombre }}</td>
                     <td>
-                        <a href="/modificarRegion/idRegion" class="btn btn-outline-secondary">
+                        <a href="/modificarRegion/{{ $region->idRegion }}" class="btn btn-outline-secondary">
                             Modificar
                         </a>
                     </td>
                     <td>
-                        <a href="/eliminarRegion/idRegion" class="btn btn-outline-secondary">
+                        <a href="/eliminarRegion/{{ $region->idRegion }}" class="btn btn-outline-secondary">
                             Eliminar
                         </a>
                     </td>
