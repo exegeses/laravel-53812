@@ -130,17 +130,17 @@ Route::get('/agregarDestino', function ()
 Route::post('/agregarDestino', function ()
 {
     //capturamos datos enviados por el form
-    $destNombre = $_POST['destNombre'];
-    $idRegion = $_POST['idRegion'];
-    $destPrecio = $_POST['destPrecio'];
-    $destAsientos = $_POST['destAsientos'];
+    $destNombre      = $_POST['destNombre'];
+    $idRegion        = $_POST['idRegion'];
+    $destPrecio      = $_POST['destPrecio'];
+    $destAsientos    = $_POST['destAsientos'];
     $destDisponibles = $_POST['destDisponibles'];
     //insertamos
     DB::table('destinos')
             ->insert(
                 [
                     'destNombre'        =>$destNombre,
-                    'idRegion '         =>$idRegion,
+                    'idRegion'          =>$idRegion,
                     'destPrecio'        =>$destPrecio,
                     'destAsientos'      =>$destAsientos,
                     'destDisponibles'   =>$destDisponibles
