@@ -150,3 +150,11 @@ Route::post('/agregarDestino', function ()
     return redirect('/adminDestinos')
         ->with( [ 'mensaje'=>'Destino: '.$destNombre.' agregado correctamente' ] );
 });
+Route::get('/modificarDestino/{id}', function ($idDestino)
+{
+    //obtenemos datos de un destino
+    $destino = DB::table('destinos')
+                    ->where('idDestino', $idDestino)
+                    ->first();
+    return view('modificarDestino', [ 'destino' => $destino ]);
+});
