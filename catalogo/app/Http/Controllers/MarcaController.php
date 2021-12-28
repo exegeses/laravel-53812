@@ -15,7 +15,7 @@ class MarcaController extends Controller
     public function index()
     {
         //obtenemos listado de marcas
-        $marcas = Marca::paginate(5);
+        $marcas = Marca::paginate(7);
         return view('adminMarcas', [ 'marcas'=>$marcas ]);
     }
 
@@ -37,22 +37,33 @@ class MarcaController extends Controller
      */
     public function store( Request $request )
     {
-        //capturamos dato enviado
-        $mkNombre = $request->mkNombre;
         //validación
         $this->validarForm( $request );
-        //..........guardar en tabla marcas
-        return 'pasó validación, falta guardar en tabla';
+        //instanciamos objeto
+        $Marca = new Marca;
+        //asignamos atributos
+        $Marca->mkNombre = $mkNombre = $request->mkNombre;
+        //guardar en tabla marcas
+        $Marca->save();
+        //redirección con mensaje de ok
+        return redirect('/adminMarcas')
+                ->with([ 'mensaje'=>'Marca: '.$mkNombre.' agregada correctamente.' ]);
     }
 
-    private function validarForm( Request $request ) : void
+
+    /**
+     * Método para validar formulario
+     * @param Request $request
+     */
+    private function validarForm(Request $request ) : void
     {
         $request->validate(
-            [   'mkNombre'=>'required|min:2|max:50' ],
+            [   'mkNombre'=>'required|min:2|max:50|unique:App\Models\Marca' ],
             [
                 'mkNombre.required'=>'El campo "Nombre de la marca" es obligatorio.',
                 'mkNombre.min'=>'El campo "Nombre de la marca" debe tener al menos 2 caractéres.',
-                'mkNombre.max'=>'El campo "Nombre de la marca" debe tener 50 caractéres como máximo.'
+                'mkNombre.max'=>'El campo "Nombre de la marca" debe tener 50 caractéres como máximo.',
+                'mkNombre.unique'=>'El "Nombre de la marca" debe ser único, no debe haber duplicados.'
             ]
         );
     }
