@@ -87,19 +87,30 @@ class MarcaController extends Controller
      */
     public function edit($id)
     {
-        //
+        //obtenemos datos de una marca
+        $Marca = Marca::find($id);
+        return view('modificarMarca', [ 'Marca'=>$Marca ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        //validamos
+        $this->validarForm($request);
+        //obtenemos datos de marca
+        $Marca = Marca::find($request->idMarca);
+        //modificar atributo
+        $Marca->mkNombre = $mkNombre = $request->mkNombre;
+        //guardamos
+        $Marca->save();
+        //redirección con mensaje de ok
+        return redirect('/adminMarcas')
+            ->with([ 'mensaje'=>'Marca: '.$mkNombre.' agregada correctamente.' ]);
     }
 
     /**
