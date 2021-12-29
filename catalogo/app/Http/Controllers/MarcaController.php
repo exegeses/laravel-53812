@@ -139,7 +139,10 @@ class MarcaController extends Controller
         }
         //redirección a admin con mensaje que no se puede borrar
         return redirect('/adminMarcas')
-                    ->with([ 'mensaje'=>'No se puede eliminar la marca '.$Marca->mkNombre.' porque tiene productos relacionados.' ]);
+                    ->with([
+                        'mensaje'=>'No se puede eliminar la marca '.$Marca->mkNombre.' porque tiene productos relacionados.',
+                        'alert' => 'danger'
+                    ]);
     }
 
     /**
@@ -148,8 +151,15 @@ class MarcaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        Marca::destroy($request->idMarca);
+        //redirección con mensaje ok
+        return redirect('/adminMarcas')
+            ->with(
+                [
+                    'mensaje'=>'Marca: '.$request->mkNombre.' eliminada correctamente.',
+                    'alert'=>'info'
+                ]);
     }
 }
