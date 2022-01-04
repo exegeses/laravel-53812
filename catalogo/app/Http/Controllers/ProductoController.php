@@ -48,12 +48,24 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         //validamos
-
+        $this->validarForm($request);
         //subir imagen *
+        $prdImagen = $this->subirImagen($request);
         //instanciamos
+        $Producto = new Producto();
         //asignamos atributos
+        $Producto->prdNombre = $request->prdNombre;
+        $Producto->prdPrecio = $request->prdPrecio;
+        $Producto->idMarca = $request->idMarca;
+        $Producto->idCategoria = $request->idCategoria;
+        $Producto->prdPresentacion = $request->prdPresentacion;
+        $Producto->prdStock = $request->prdStock;
+        $Producto->prdImagen = $prdImagen;
         //guardamos
-        //redirecion con mensaje ok
+        $Producto->save();
+        //redireción con mensaje ok
+        return redirect('adminProductos')
+            ->with(['mensaje'=>'Producto: '.$request->prdNombre.' agregado correctamente.']);
     }
 
     private function validarForm(Request $request)
@@ -87,6 +99,24 @@ class ProductoController extends Controller
                 'prdImagen.max'=>'Debe ser una imagen de 2MB como máximo.'
             ]
         );
+    }
+
+    private function subirImagen(Request $request) : string
+    {
+        //si no se envió imagen  ## default
+        $prdImagen = 'noDisponible.jpg';
+
+        //si se envió imagen
+        if( $request->file('prdImagen') ){
+            //renombrar  time().extension
+            $extension = $request->file('prdImagen')->extension();
+            $prdImagen = time().'.'.$extension;
+            //subir archivo
+            $request->file('prdImagen')
+                    ->move( public_path('productos/'), $prdImagen );
+        }
+
+        return $prdImagen;
     }
 
     /**
