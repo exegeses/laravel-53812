@@ -106,6 +106,11 @@ class ProductoController extends Controller
         //si no se envió imagen  ## default
         $prdImagen = 'noDisponible.jpg';
 
+        //sólo en formulario de modificar
+        if( $request->has('imgActual') ){
+            $prdImagen = $request->imgActual;
+        }
+
         //si se envió imagen
         if( $request->file('prdImagen') ){
             //renombrar  time().extension
@@ -159,9 +164,27 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Producto $producto)
+    public function update(Request $request)
     {
-        //
+        //validamos
+        $this->validarForm($request);
+        //subir imagen *
+        $prdImagen = $this->subirImagen($request);
+        //obtenemnos datos de un producto
+        $Producto = Producto::find( $request->idProducto );
+        //modificamos atributos
+        $Producto->prdNombre = $request->prdNombre;
+        $Producto->prdPrecio = $request->prdPrecio;
+        $Producto->idMarca = $request->idMarca;
+        $Producto->idCategoria = $request->idCategoria;
+        $Producto->prdPresentacion = $request->prdPresentacion;
+        $Producto->prdStock = $request->prdStock;
+        $Producto->prdImagen = $prdImagen;
+        //guardamos
+        $Producto->save();
+        //redirección con mensaje ok
+        return redirect('/adminProductos')
+                ->with(['mensaje'=>'Producto: '.$request->prdNombre.' modificado correctamente.']);
     }
 
     /**
