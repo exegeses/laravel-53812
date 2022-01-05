@@ -14,8 +14,8 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $producto->prdNombre }}</h5>
                             <p class="card-text">
-                                Marca: {{ $producto->relMarca->mkNombre }}<br>
-                                Categoria: {{ $producto->relCategoria->catNombre }}<br>
+                                Marca: {{ $producto->getMarca->mkNombre }}<br>
+                                Categoria: {{ $producto->getCategoria->catNombre }}<br>
                                 Precio: $ {{ $producto->prdPrecio }}<br>
                                 Presentación: {{ $producto->prdPresentacion }}
                             </p>
