@@ -31,13 +31,11 @@
             </div>
 
             <script>
-                /*
                 Swal.fire(
-                    'Título de la ventana',
-                    'descripción de la ventana, blah, blah',
+                    'Advertencia',
+                    'Si pulsa el botón "Confirmar baja", se eliminará el producto seleccionado.',
                     'warning'
                 )
-                */
             </script>
 
 
